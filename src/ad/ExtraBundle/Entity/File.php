@@ -3,6 +3,8 @@
 namespace ad\ExtraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * File
@@ -27,13 +29,6 @@ class File
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="size", type="integer")
-     */
-    private $size;
     
     /**
      * @var Date()
@@ -41,6 +36,11 @@ class File
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+    
+    /**
+     * @Assert\File(maxSize="10M")
+     */
+    public $file;
     
     /**
      * @var integer
@@ -57,14 +57,6 @@ class File
     private $userId;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    private $type;
-
-
-    /**
      * Get id
      *
      * @return integer 
@@ -72,6 +64,33 @@ class File
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function getWebPath()
+    {
+    	return null === $this->name ? null : $this->getUploadDir().'/'.$this->name;
+    }
+    
+    protected function getUploadRootDir()
+    {
+    	// le chemin absolu du répertoire dans lequel sauvegarder les photos de profil
+    	return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+    
+    protected function getUploadDir()
+    {
+    	// get rid of the __DIR__ so it doesn't screw when displaying uploaded doc/image in the view.
+    	return 'uploads/files';
+    }
+     
+    public function uploadFile()
+    {
+    	// move copie le fichier présent chez le client dans le répertoire indiqué.
+    	$this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
+    	$this->name = $this->file->getClientOriginalName();
+    	
+    	// La propriété file ne servira plus
+    	$this->file = null;
     }
 
     /**
