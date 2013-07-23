@@ -1,0 +1,6 @@
+/bin
+/.buildpath
+/.project
+/.travis.yml
+/.settings
+/vendor

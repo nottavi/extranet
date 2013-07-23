@@ -1,0 +1,15 @@
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+
+
+
+<p>Salut {{ user.username }}</p> !
+<ul>
+	<li><a href="{{ path('ad_manage_category') }}">Manage catégory</a></li>
+	<li><a href="{{ path('ad_manage_category') }}">Uploader un fichier</a></li>
+</ul>
+
+
+
+{% endblock %}

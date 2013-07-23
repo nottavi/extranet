@@ -1,0 +1,36 @@
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+
+	<div class="span4 tree">
+		<ul class="treeLink">
+			<li><a data-slug="none">Racine</a>
+				<ul style="display:block;">
+					{% for cat in category.root %}
+					<li><a data-slug="{{ cat.slug }}">{{ cat.name }}</a>
+					{% if cat.__children %}
+					<ul>
+					{% for sc in cat.__children %}
+						<li class="sc"><a data-slug="{{ sc.slug }}">{{ sc.name }}</a></li>
+					{% endfor %}
+					</ul>
+					{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="span3 offset4 well gclink sidespan">
+		<ul>
+			<li><a href="{{ path('ad_new_category') }}">Ajouter une catégorie ici</a></li>
+			<li><a href="{{ path('ad_edit_category') }}">Editer la catégorie</a></li>
+			<li><a href="{{ path('ad_delete_category') }}">Supprimer la catégorie</a></li>
+		</ul>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/adextra/js/manageCat.js') }}"></script>
+{% endblock %}
