@@ -15,11 +15,16 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-    	
     	if ($this->getUser())
     	{
+    		$em = $this->getDoctrine()->getManager();
+    		$repo = $em->getRepository('adExtraBundle:File');
+    		
+    		$files = $repo->findAll();
+    		
     		return $this->render('adExtraBundle:Default:index.html.twig',array(
-    				'user' => $this->getUser()
+    				'user' => $this->getUser(),
+    				'files' => $files
     				));
     	}
     	else 

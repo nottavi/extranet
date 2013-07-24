@@ -21,14 +21,15 @@ class AppKernel extends Kernel
         	new JMS\DiExtraBundle\JMSDiExtraBundle($this),
         		
             new ad\ExtraBundle\adExtraBundle(),
+        	new ad\UserBundle\adUserBundle(),
         	
         	new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
         	new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         	new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         	new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         	new Bc\Bundle\BootstrapBundle\BcBootstrapBundle(),
-        	new FOS\UserBundle\FOSUserBundle(),
-            new ad\UserBundle\adUserBundle()
+        	new FOS\UserBundle\FOSUserBundle()
+            
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -4,6 +4,7 @@ namespace ad\ExtraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ad\ExtraBundle\Validator\Constraints as adAssert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -39,6 +40,7 @@ class File
     
     /**
      * @Assert\File(maxSize="10M")
+     * @adAssert\FileTypeNonAllowed
      */
     public $file;
     

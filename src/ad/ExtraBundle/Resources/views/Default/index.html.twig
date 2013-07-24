@@ -1,15 +1,29 @@
 {% extends "::layout.html.twig" %}
 
 {% block body %}
-
-
-
-<p>Salut {{ user.username }}</p>
-<ul>
-	<li><a href="{{ path('ad_manage_category') }}">Manage catégory</a></li>
-	<li><a href="{{ path('ad_add_file') }}">Uploader un fichier</a></li>
-</ul>
-
+<div class="well">
+	<p>Salut {{ user.username }}</p>
+	
+	Voici les fichiers présents sur le server :
+	{% if files %}
+		<ul>
+		{% for file in files %}
+			<li><a href="{{ path('ad_download_file', { 'filename': file.name }) }}">{{ file.name }}</a></li>
+			{% if user.roles.0 == 'ROLE_ADMIN' %}
+			<a class="icon-remove center block" href="{{ path('ad_delete_file', { 'id': file.id }) }}"></a>
+			{% elseif user.roles.0 =='ROLE_PARTENAIRE' %}
+			
+			{% endif %}
+		{% endfor %}
+		</ul>
+	{% endif %}
+</div>
+{% if user.roles.0 == 'ROLE_ADMIN' %}
+	<ul>
+		<li><a href="{{ path('ad_manage_category') }}">Manage catégory</a></li>
+		<li><a href="{{ path('ad_add_file') }}">Uploader un fichier</a></li>
+	</ul>
+{% endif %}
 
 
 {% endblock %}
