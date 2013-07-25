@@ -31,7 +31,7 @@ class FileController extends Controller
 		
 		$form->handleRequest($request);
 		
-		if ($form->isValid()) 
+	    if ($form->isValid())
 		{
 			$em = $this->getDoctrine()->getManager();
 			
@@ -44,7 +44,6 @@ class FileController extends Controller
 			
 			return $this->redirect($this->generateUrl('ad_index'));
 		}
-		
 		return $this->render('adExtraBundle:File:new.html.twig', array ('form' => $formView));
 	}
 	
@@ -57,7 +56,7 @@ class FileController extends Controller
 	
 		$file = $em->getRepository("adExtraBundle:File")->findOneBy(array('id' => $id));
 	
-		if ($this->get('security.context')->isGranted('ROLE_ADMIN') || $file->getUserId() == $this->getUser())
+		if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
 		{
 			if (!$file)
 			{

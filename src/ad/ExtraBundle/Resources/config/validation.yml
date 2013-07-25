@@ -1,4 +1,4 @@
-Acme\DemoBundle\Entity\AcmeEntity:
+ad\ExtraBundle\Entity\File:
     properties:
         file:
             - ad\ExtraBundle\Validator\Constraints\FileTypeNonAllowed: ~
