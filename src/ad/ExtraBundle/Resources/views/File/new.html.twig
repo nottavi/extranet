@@ -5,12 +5,14 @@
 	<div class="span8 offset2 well centertext">
 	<h2>Enregistrer une nouvelle catégorie</h1>
 		<form action="{{ path('ad_add_file') }}" method="post" {{ form_enctype(form) }}>
-		{{ form_errors(form.file) }}
-			<div>
-				{{ form_widget(form.file) }}
-				{{ form_label(form.file) }}
-			</div>
-			{{ form_rest(form) }}
+			{% if errors is defined %}
+				{% for error in errors %}
+				<p class="error">
+				{{ error.message }}
+				</p>
+				{% endfor %}
+			{% endif %}
+			{{ form(form) }}
 		</form>
 	</div>
 </div>

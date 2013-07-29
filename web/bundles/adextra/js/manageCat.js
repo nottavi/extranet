@@ -4,6 +4,11 @@ $('.tree li').each(function(){
         }
 });
 
+var hrefs = [];
+$('.gclink li > a').each(function(index){
+	hrefs[index] =  $(this).attr("href").split('/');	//explosion des urls (liens de gestion de catégorie)
+});
+
 $('.gclink li > a').click(function(){
 	var attr = $(this).attr('href');
    	if(attr.length < 30){
@@ -17,11 +22,6 @@ $('.tree li.parent > a').click(function(){
         $(this).parent().children('ul').slideToggle('fast');	//Un clic sur un parent déclenche le slidetoggle de ses enfants.
 });
 
-var hrefs = [];
-$('.gclink li > a').each(function(index){
-	hrefs[index] =  $(this).attr("href").split('/');	//explosion des urls (liens de gestion de catégorie)
-});
-
 $('.treeLink li > a').click(function(){
 	$('.treeLink li > a').each(function(){	//On retire le style "selected" de tout les liens.
 		$(this).removeAttr("id");
@@ -29,13 +29,11 @@ $('.treeLink li > a').click(function(){
 	$(this).attr('id', 'selected');		//Et on le rajoute sur celui sur lequel on viens de clicé.
 	var txt = $(this).attr('data-slug');	//Ajout du slug pour le controller.
 	$('.gclink li > a').each(function(index){
-		if (hrefs[index][3] != null){
+		if (hrefs[index][3] != ''){
 			$(this).attr('href', '/'+hrefs[index][1]+'/'+hrefs[index][2]+'/'+hrefs[index][3]+'/'+txt);
 		}
 		else{
 			$(this).attr('href', '/'+hrefs[index][1]+'/'+hrefs[index][2]+'/'+txt);	//recréation du lien.
 		}
-		
-		
 	});
 });

@@ -8,11 +8,11 @@ class FileTypeNonAllowedValidator extends ConstraintValidator
 {
 	public function validate($value, Constraint $constraint)
 	{	
-		var_dump($value);
-		die;
-		
-		if (strpos($value->getClientOriginalName(), '.exe')) {
-			$this->context->addViolation($constraint->message, array('%string%' => $value));
+		if ($value != null)
+		{
+			if (strpos($value->getClientOriginalName(), '.exe')) {
+				$this->context->addViolation($constraint->message, array('%string%' => $value->getClientOriginalName()));
+			}
 		}
 	}
 }

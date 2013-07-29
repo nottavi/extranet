@@ -5,6 +5,7 @@ namespace ad\ExtraBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping\Column;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -27,6 +28,10 @@ class Category
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Length(
+     *      min = "44",
+     *      minMessage = "Minimum de {{ limit }} |Cette chaine est trop courte. Elle doit avoir au minimum {{ limit }} caractères."
+     * )
      */
     private $name;
     

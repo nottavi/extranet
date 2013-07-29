@@ -25,11 +25,19 @@ class FileController extends Controller
 		
 		$file = new File();
 		
-		$form = $this->createForm(new FileType(), $file); //, $adsParameter
+		$form = $this->createForm(new FileType(), $file); //, $adsParameter		
 		
 		$formView = $form->createView();
 		
 		$form->handleRequest($request);
+		
+		$validator = $this->get('validator');
+		$errorList = $validator->validate($file);
+		
+		if (count($errorList) > 0) {
+			return $this->render('adExtraBundle:File:new.html.twig', array ('form' => $formView,
+																			'errors' => $errorList));
+		}
 		
 	    if ($form->isValid())
 		{
@@ -44,6 +52,7 @@ class FileController extends Controller
 			
 			return $this->redirect($this->generateUrl('ad_index'));
 		}
+		
 		return $this->render('adExtraBundle:File:new.html.twig', array ('form' => $formView));
 	}
 	

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Entity(repositoryClass="ad\ExtraBundle\Entity\Repository\FileRepository")
  */
 class File
-{
+{	
     /**
      * @var integer
      *
@@ -40,7 +40,7 @@ class File
     
     /**
      * @Assert\File(maxSize="10M")
-     * @adAssert\FileTypeNonAllowed
+     * @adAssert\FileTypeNonAllowed()
      */
     public $file;
     
