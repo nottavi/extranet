@@ -29,7 +29,7 @@ class Category
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\Length(
-     *      min = "44",
+     *      min = "4",
      *      minMessage = "Minimum de {{ limit }} |Cette chaine est trop courte. Elle doit avoir au minimum {{ limit }} caractères."
      * )
      */

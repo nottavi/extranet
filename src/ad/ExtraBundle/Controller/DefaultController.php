@@ -17,6 +17,33 @@ class DefaultController extends Controller
     {
     	if ($this->getUser())
     	{
+    			$em = $this->getDoctrine()->getManager();
+    			 
+    			$category = $em->getRepository('adExtraBundle:Category')->childrenHierarchy();
+    			 
+    			foreach ($category as $cat)
+    			{
+    				$cat['child'] = array();
+    		
+    				$child = $cat['__children'];
+    		
+    				$cat['__children'] = array();
+    		
+    				foreach ($child as $sscat)
+    				{
+    					$childCounted = array();
+    					 
+    					$sscat['child'] = $em->getRepository('adExtraBundle:Category')->hasFile($sscat['id']);
+    					 
+    					$cat['child'] += $sscat['child'];
+    		
+    					$cat['__children'][] = $sscat;
+    				}
+    				$cat['child'] += $em->getRepository('adExtraBundle:Category')->hasFile($cat['id']);
+    		
+    				$catCounted[] = $cat;
+    			}
+    		
     		$em = $this->getDoctrine()->getManager();
     		$repo = $em->getRepository('adExtraBundle:File');
     		
@@ -24,7 +51,7 @@ class DefaultController extends Controller
     		
     		return $this->render('adExtraBundle:Default:index.html.twig',array(
     				'user' => $this->getUser(),
-    				'files' => $files
+    				'cat' => $catCounted
     				));
     	}
     	else 

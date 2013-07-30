@@ -2,8 +2,8 @@
 
 {% block body %}
 <div class="row centerbloc">
-	<div class="span8 offset2 well centertext">
-	<h2>Enregistrer une nouvelle catégorie</h1>
+	<div class="span8 offset2">
+	<h2 class="centertext">Uploader un nouveau fichier</h1>
 		<form action="{{ path('ad_add_file') }}" method="post" {{ form_enctype(form) }}>
 			{% if errors is defined %}
 				{% for error in errors %}
@@ -12,7 +12,17 @@
 				</p>
 				{% endfor %}
 			{% endif %}
-			{{ form(form) }}
+			<div class="file">
+			    {{ form_label(form.file) }}
+			    {{ form_errors(form.file) }}
+			    {{ form_widget(form.file) }}
+			</div>
+			<div class="categoryId">
+			    {{ form_label(form.categoryId) }}
+			    {{ form_errors(form.categoryId) }}
+			    {{ form_widget(form.categoryId) }}
+			</div>
+			{{ form_rest(form) }}
 		</form>
 	</div>
 </div>

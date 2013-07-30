@@ -1,7 +1,3 @@
-{% extends "::layout.html.twig" %}
-
-{% block body %}
-
 <div class="span4 tree">
 	<ul class="treeLink">
 		<li><a data-slug="none">Racine</a>
@@ -29,15 +25,13 @@
 		</li>
 	</ul>
 </div>
-<div class="span3 offset4 gclink">
+<div class="dashaction offset4 span3 gclink">
 	<ul>
 		<li><a href="{{ path('ad_new_category') }}">Ajouter une catégorie ici</a></li>
 		<li><a href="{{ path('ad_edit_category') }}">Editer la catégorie</a></li>
 		<li><a href="{{ path('ad_delete_category') }}">Supprimer la catégorie</a></li>
 	</ul>
 </div>
-
-{% endblock %}
 
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('bundles/adextra/js/manageCat.js') }}"></script>

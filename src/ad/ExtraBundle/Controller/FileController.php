@@ -104,4 +104,20 @@ class FileController extends Controller
 	
 		return $response;
 	}
+	
+	/**
+	 * @Route("/file/category/{id}", name="ad_category_file")
+	 */
+	public function fileCategoryAction($id, Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('adExtraBundle:Category');
+		
+		$results = $repo->hasFile($id);
+		
+		return $this->container->get('templating')->renderResponse('adExtraBundle:File:listajax.html.twig', array(
+				'files' => $results,
+				'user' => $this->getUser()
+		));
+	}
 }

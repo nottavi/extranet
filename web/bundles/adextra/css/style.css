@@ -1,3 +1,75 @@
+header div.row{
+	height:50px;
+}
+
+.ajax{
+	clear:both;
+	margin-top:50px;
+}
+
+#ad_extrabundle_filetype_Envoyer{
+	margin:0 auto;
+	display:block;
+}
+
+.file label, .categoryId label{
+	line-height:180%;
+}
+
+.file input, .categoryId select{
+	position:absolute;
+	right:20px;
+	width:200px;
+}
+
+.file, .categoryId{
+	height:30px;
+	width:400px;
+	display:block;
+	margin:auto;
+	position:relative;
+	margin-bottom:10px;
+}
+
+.del{
+	margin-top:4px;
+}
+
+.fichiers li, .fichiers a{
+	float:left;
+	display:block;
+}
+
+.clr{
+	clear:both;
+}
+
+.file label, .file input, .categoryId label, .categoryId input{
+	display:inline-block;
+}
+
+.files.loading {
+    background-image: url("/bundles/adextra/images/ajax-loader.gif");
+    background-repeat:no-repeat;
+    width:25px;
+    height:25px;
+}
+
+.centertext{
+	text-align:center;
+}
+
+div.ajax div.dashaction{
+	margin-left:400px;
+}
+
+div.dashaction{
+	margin-left:435px;
+	width:185px;
+}
+
+/* CSS pour le tree Category */
+
 ul.treeLink li a:hover {
 	cursor:pointer;
 }
@@ -7,8 +79,6 @@ ul.treeLink li a:hover {
 	text-decoration:underline;
 	font-weight:bold;
 }
-
-/* CSS pour le tree Category */
 
 .tree {
     -moz-border-bottom-colors: none;
@@ -45,7 +115,7 @@ ul.treeLink li a:hover {
 }
 .tree li.parent > a:before {
     background-image: url("/img/plus_minus_icons.png");
-    background-position: 25px center;
+    background-position: 0px center;
     content: "";
     display: block;
     height: 21px;
@@ -56,7 +126,7 @@ ul.treeLink li a:hover {
     width: 23px;
 }
 .tree ul li.active > a:before {
-    background-position: 0 center;
+    background-position: 25px center;
 }
 .tree ul li ul {
     border-left: 1px solid #D9DADB;

@@ -1,0 +1,8 @@
+<ul class="fichiers">
+{% for file in files %}
+		<li><a href="{{ path('ad_download_file', { 'filename': file.name }) }}">{{ file.name }}</a></li>
+		{% if user.roles.0 == 'ROLE_ADMIN' %}
+		<a class="icon-remove center del" href="{{ path('ad_delete_file', { 'id': file.id }) }}"></a>
+		{% endif %}
+{% endfor %}
+</ul>

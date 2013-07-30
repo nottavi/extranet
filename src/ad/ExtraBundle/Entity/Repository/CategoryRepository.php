@@ -42,37 +42,20 @@ class CategoryRepository extends NestedTreeRepository
 		return $response[0];
 	}
 	
-	public function countAds($id=260)
+	public function hasFile($id)
 	{
 		$em = $this->getEntityManager();
-	
+		
 		$qb = $em->createQueryBuilder();
-		$qb->addSelect('ads');
-		$qb->addSelect('c');
-		$qb->from('adExtraBundle:Ads','ads');
-		$qb->leftJoin('ads.categoryId', 'c');
-		$qb->where('c.id = :id');
+		$qb->addSelect('f');
+		$qb->from('adExtraBundle:File','f');
+		$qb->where('f.categoryId = :id');
 		
 		$qb->setParameter('id', $id);
 		
 		$response = $qb->getQuery()->getResult();
 		
-		if (!is_null($response))
-		{
-			foreach ($response as $ad)
-			{
-				$i = 0;
-			
-				$em->getRepository("adExtraBundle:Ads")->hydrateAd($ad);
-				
-				if (!$em->getRepository("adExtraBundle:Ads")->isConfirmed($ad))
-				{
-					unset($response[$i]);
-				}
-				$i++;
-			}
-		}
-		
-		return (int)count($response);
+		return $response;
 	}
+	
 }

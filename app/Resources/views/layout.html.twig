@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
   	<!-- meta -->
     <meta charset="utf-8" />
@@ -13,15 +13,17 @@
 	{% endblock %}
 	
 	
-    <title>{% block title %}ad{% endblock %}</title>
+    <title>{% block title %}AD Extranet Assets Management{% endblock %}</title>
   </head>
   <body>
   	<div class="container">
 		<header>
-			<a href="{{ path('ad_index') }}">Home</a>
-			<a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+			<div class="row span12">
+				<a style="float:left;" href="{{ path('ad_index') }}">Home</a>
+				<a style="float:right;" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+			</div>
 		</header>
-	  	<div class="span12 content">
+	  	<div class="row span12 content well">
 		{% block body %}
 		
 		{% endblock %}

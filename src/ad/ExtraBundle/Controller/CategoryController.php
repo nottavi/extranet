@@ -16,36 +16,33 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class CategoryController extends Controller
 {
 	/**
-	 * @Route("/category/list/", name="ad_list_category")
-	 * @Template()
-	 */
-	public function listAction()
-	{
-		$em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('adExtraBundle:Category');
-		
-		$arrayTree = $repo->childrenHierarchy();
-
-		return $this->container->get('templating')->renderResponse('adExtraBundle:Category:list.html.twig', array(
-				'category' => $arrayTree
-		));
-	}
-	
-	/**
 	 * @Route("/category/manage/", name="ad_manage_category")
 	 * @Secure(roles="ROLE_ADMIN")
 	 * @Template()
 	 */
-	public function manageAction()
+	public function manageAction(Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$repo = $em->getRepository('adExtraBundle:Category');
 		
 		$arrayTree = array('root' => $repo->childrenHierarchy());
 		
-		return $this->container->get('templating')->renderResponse('adExtraBundle:Category:manage.html.twig', array(
-				'category' => $arrayTree,
-		));
+		$ajax = $request->request->get('ajax') == 'on';
+		
+		if ( $ajax != null)
+		{
+			if ($request->request->get('ajax') == 'on')
+			{
+				return $this->container->get('templating')->renderResponse('adExtraBundle:Category:manageajax.html.twig', array(
+						'category' => $arrayTree,
+				));
+			}
+		}
+		else {
+			return $this->container->get('templating')->renderResponse('adExtraBundle:Category:manage.html.twig', array(
+					'category' => $arrayTree,
+			));
+		}		
 	}
 	
 	/**

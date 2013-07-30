@@ -1,29 +1,92 @@
 {% extends "::layout.html.twig" %}
 
 {% block body %}
-<div class="well">
+<div class="span4 tree">
 	<p>Salut {{ user.username }}</p>
-	
-	Voici les fichiers présents sur le server :
-	{% if files %}
-		<ul>
-		{% for file in files %}
-			<li><a href="{{ path('ad_download_file', { 'filename': file.name }) }}">{{ file.name }}</a></li>
-			{% if user.roles.0 == 'ROLE_ADMIN' %}
-			<a class="icon-remove center block" href="{{ path('ad_delete_file', { 'id': file.id }) }}"></a>
-			{% elseif user.roles.0 =='ROLE_PARTENAIRE' %}
-			
-			{% endif %}
+	<p>Choisissez une catégorie pour afficher les fichers présent dans celle-ci.</p>
+	{% if cat %}
+	<ul class="treeLink">
+	{% for category in cat %}
+		<li style="display:block; float:left; clear:both;">
+		<a href="{{ path("ad_category_file", { 'id': category.id }) }}">{{ category.name }}</a>
+			<ul style="display:block;">
+				{% for cats in category.__children %}
+				<li>
+				<a href="{{ path("ad_category_file", { 'id': cats.id }) }}">{{ cats.name }}</a>
+				{% if cats.__children %}
+				<ul style="display:block;">
+					{% for sc in cats.__children %}
+						<li class="sc">
+						<a href="{{ path("ad_category_file", { 'id': sc.id }) }}">{{ sc.name }}</a>
+						{% if sc.__children %}
+						<ul style="display:block;">
+							{% for cate in sc.__children %}
+								<li class="sc"><a href="{{ path("ad_category_file", { 'id': cate.id }) }}">{{ cate.name }}</a></li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+				</li>
+				{% endfor %}
+			</ul>
+		</li>
 		{% endfor %}
-		</ul>
+	</ul>
 	{% endif %}
 </div>
+<div class="span2 files">
+
+</div>
 {% if user.roles.0 == 'ROLE_ADMIN' %}
+<div class="dashaction offset4 span3">
 	<ul>
-		<li><a href="{{ path('ad_manage_category') }}">Manage catégory</a></li>
+		<li><a onclick="manageCat()">Manage catégory</a></li>
 		<li><a href="{{ path('ad_add_file') }}">Uploader un fichier</a></li>
 	</ul>
+</div>
+
+<div class="span12 ajax">
+
+</div>
 {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/adextra/js/manageCat.js') }}"></script>
+<script>
+	function manageCat() {
+		var path = "{{ path('ad_manage_category') }}";
+		$.ajax({
+		    type: 'POST',
+		    url: path,
+		    data: { ajax: 'on' },
+		    success: function(data) {
+		    	$('.ajax').html(data)
+		    }
+		})
+	};
+	
+	$('.treeLink li > a').click(function(event) {
+		event.preventDefault();
+		$('.files').html('');
+		$(".files").addClass("loading");
+		var path = $(this).attr('href');
+		$.ajax({
+		    type: 'POST',
+		    url: path,
+		    data: { ajax: 'on' },
+		    success: function(data) {
+		    	$('.files').html(data)
+		    	$(".files").removeClass("loading"); 
+		    }
+		})
+	});
 
 
+	
+	
+</script>
 {% endblock %}
