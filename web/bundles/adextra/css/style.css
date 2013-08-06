@@ -149,6 +149,12 @@ div.mfp-wrap div.mfp-container div.mfp-content{
 	float:left;
 }
 
+#login .remember_me label{
+	clear:none;
+	width:125px;
+	margin-top:10px;
+}
+
 #login input#_submit{
 	margin:0 auto;
 	display:block;
