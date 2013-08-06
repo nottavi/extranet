@@ -1,92 +1,98 @@
 {% extends "::layout.html.twig" %}
 
 {% block body %}
-<div class="span4 tree">
-	<p>Salut {{ user.username }}</p>
-	<p>Choisissez une catégorie pour afficher les fichers présent dans celle-ci.</p>
-	{% if cat %}
-	<ul class="treeLink">
-	{% for category in cat %}
-		<li style="display:block; float:left; clear:both;">
-		<a href="{{ path("ad_category_file", { 'id': category.id }) }}">{{ category.name }}</a>
-			<ul style="display:block;">
-				{% for cats in category.__children %}
-				<li>
-				<a href="{{ path("ad_category_file", { 'id': cats.id }) }}">{{ cats.name }}</a>
-				{% if cats.__children %}
-				<ul style="display:block;">
-					{% for sc in cats.__children %}
-						<li class="sc">
-						<a href="{{ path("ad_category_file", { 'id': sc.id }) }}">{{ sc.name }}</a>
-						{% if sc.__children %}
-						<ul style="display:block;">
-							{% for cate in sc.__children %}
-								<li class="sc"><a href="{{ path("ad_category_file", { 'id': cate.id }) }}">{{ cate.name }}</a></li>
-							{% endfor %}
-						</ul>
-						{% endif %}
+<div class="row">
+	<div class="span4 tree">
+		<p>Salut {{ user.username }}</p>
+		<p>Choisissez une catégorie pour afficher les fichers présents dans celle-ci.</p>
+		{% if cat %}
+		<ul class="treeLink">
+			<li>
+				<p class="plusminus"></p>
+				<a data-slug="none" href="#">Racine</a>
+					<ul style="display:block;">
+					{% for category in cat %}
+						<li style="display:block; float:left; clear:both;">
+							<p class="plusminus"></p>
+							<a data-slug="{{ category.slug }}" href="{{ path("ad_category_file", { 'id': category.id }) }}">{{ category.name }}</a>
+								<ul style="display:block;">
+									{% for cats in category.__children %}
+									<li class="sc">
+										<p class="plusminus"></p>
+										<a data-slug="{{ cats.slug }}" href="{{ path("ad_category_file", { 'id': cats.id }) }}">{{ cats.name }}</a>
+										{% if cats.__children %}
+										<ul style="display:block;">
+											{% for sc in cats.__children %}
+												<li class="sc">
+													<p class="plusminus"></p>
+													<a data-slug="{{ sc.slug }}" href="{{ path("ad_category_file", { 'id': sc.id }) }}">{{ sc.name }}</a>
+													{% if sc.__children %}
+													<ul style="display:block;">
+														{% for cate in sc.__children %}
+															<li class="sc">
+															<p class="plusminus"></p>
+															<a data-slug="{{ cate.slug }}" href="{{ path("ad_category_file", { 'id': cate.id }) }}">{{ cate.name }}</a></li>
+														{% endfor %}
+													</ul>
+													{% endif %}
+												</li>
+											{% endfor %}
+										</ul>
+										{% endif %}
+									</li>
+									{% endfor %}
+								</ul>
 						</li>
 					{% endfor %}
-				</ul>
-				{% endif %}
-				</li>
-				{% endfor %}
-			</ul>
-		</li>
-		{% endfor %}
-	</ul>
+					</ul>
+			</li>
+		</ul>
+		{% endif %}
+	</div>
+	<div class="span4 files">
+		<h2>Gestion fichiers</h2>
+		<a id="new" class="btn btn-default" href="{{ path('ad_add_file') }}">Uploader un fichier</a>
+		<div class="filesrefrsh">
+		
+		</div>
+	</div>
+	{% if user.roles.0 == 'ROLE_ADMIN' %}
+	<div class="dashaction span2">
+		<h2>Gestion catégories</h2>
+		<ul class="gclink">
+			<li><a href="{{ path('ad_new_category') }}">Ajouter une catégorie ici</a></li>
+			<li><a href="{{ path('ad_edit_category') }}">Editer la catégorie</a></li>
+			<li><a href="{{ path('ad_delete_category') }}">Supprimer la catégorie</a></li>
+		</ul>
+		<h2>Gestion utilisateurs</h2>
+		<ul>
+			<li><a href="{{ path('ad_add_user') }}">Ajouter un utilisateur</a></li>
+			<li><a class="ajax-popup-link" href="{{ path('ad_list_user_action', { 'action': 'edit' }) }}">Editer un utilisateur</a></li>
+			<li><a class="ajax-popup-link" href="{{ path('ad_list_user_action', { 'action': 'delete' }) }}">Supprimer un utilisateur</a></li>
+		</ul>
+		<div id="test-popup" class="white-popup mfp-hide">
+		
+		</div>
+	</div>
+</div>
+
+	{% if 'delete' in app.request.requestUri %}
+	<div class="row">
+		<span class="span5 alert bloc alert-info"><strong>Info !</strong> L'action de suppression a bien été effectué</span>
+	</div>
+	{% elseif 'update' in app.request.requestUri %}
+	<div class="row">
+		<span class="span5 alert bloc alert-success"><strong>Info !</strong> L'action de mise à jour a bien été effectué</span>
+	</div>
+	{% elseif 'new' in app.request.requestUri %}
+	<div class="row">
+		<span class="span5 alert bloc alert-success"><strong>Info !</strong> L'action d'ajout a bien été effectué</span>
+	</div>
 	{% endif %}
-</div>
-<div class="span2 files">
-
-</div>
-{% if user.roles.0 == 'ROLE_ADMIN' %}
-<div class="dashaction offset4 span3">
-	<ul>
-		<li><a onclick="manageCat()">Manage catégory</a></li>
-		<li><a href="{{ path('ad_add_file') }}">Uploader un fichier</a></li>
-	</ul>
-</div>
-
-<div class="span12 ajax">
-
-</div>
-{% endif %}
+	{% endif %}
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ asset('bundles/adextra/js/manageCat.js') }}"></script>
-<script>
-	function manageCat() {
-		var path = "{{ path('ad_manage_category') }}";
-		$.ajax({
-		    type: 'POST',
-		    url: path,
-		    data: { ajax: 'on' },
-		    success: function(data) {
-		    	$('.ajax').html(data)
-		    }
-		})
-	};
-	
-	$('.treeLink li > a').click(function(event) {
-		event.preventDefault();
-		$('.files').html('');
-		$(".files").addClass("loading");
-		var path = $(this).attr('href');
-		$.ajax({
-		    type: 'POST',
-		    url: path,
-		    data: { ajax: 'on' },
-		    success: function(data) {
-		    	$('.files').html(data)
-		    	$(".files").removeClass("loading"); 
-		    }
-		})
-	});
-
-
-	
-	
-</script>
+<script type="text/javascript" src="{{ asset('bundles/adextra/js/jquery.magnific-popup.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/adextra/js/extranet.js') }}"></script>
 {% endblock %}

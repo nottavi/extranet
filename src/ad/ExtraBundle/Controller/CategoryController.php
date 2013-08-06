@@ -14,37 +14,7 @@ use ad\ExtraBundle\Entity\Category;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
 class CategoryController extends Controller
-{
-	/**
-	 * @Route("/category/manage/", name="ad_manage_category")
-	 * @Secure(roles="ROLE_ADMIN")
-	 * @Template()
-	 */
-	public function manageAction(Request $request)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$repo = $em->getRepository('adExtraBundle:Category');
-		
-		$arrayTree = array('root' => $repo->childrenHierarchy());
-		
-		$ajax = $request->request->get('ajax') == 'on';
-		
-		if ( $ajax != null)
-		{
-			if ($request->request->get('ajax') == 'on')
-			{
-				return $this->container->get('templating')->renderResponse('adExtraBundle:Category:manageajax.html.twig', array(
-						'category' => $arrayTree,
-				));
-			}
-		}
-		else {
-			return $this->container->get('templating')->renderResponse('adExtraBundle:Category:manage.html.twig', array(
-					'category' => $arrayTree,
-			));
-		}		
-	}
-	
+{	
 	/**
 	 * @Route("/category/add/{slug}", name="ad_new_category_slug")
 	 * @Route("/category/add/", name="ad_new_category")
@@ -55,7 +25,7 @@ class CategoryController extends Controller
 	{
 		$category = new Category();
 		
-		$form = $this->createForm(new CategoryType(), $category); //, $adsParameter
+		$form = $this->createForm(new CategoryType(), $category);
 		
 		$form->handleRequest($request);
 		
@@ -73,7 +43,7 @@ class CategoryController extends Controller
 				$em->persist($cat);
 				$em->flush();
 					
-				return $this->redirect($this->generateUrl('ad_manage_category'));
+				return $this->redirect($this->generateUrl('ad_index', array('new')));
 			}
 			else
 			{
@@ -90,7 +60,7 @@ class CategoryController extends Controller
 				$em->persist($cat);
 				$em->flush();
 					
-				return $this->redirect($this->generateUrl('ad_manage_category'));
+				return $this->redirect($this->generateUrl('ad_index', array('new')));
 			}
 		}
 		
@@ -147,7 +117,8 @@ class CategoryController extends Controller
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($data);
 				$em->flush();
-				return $this->redirect($this->generateUrl('ad_manage_category'));
+				
+				return $this->redirect($this->generateUrl('ad_index', array('update')));
 			}
 		}
 		return $this->render('adExtraBundle:Category:edit.html.twig', array(
@@ -178,6 +149,6 @@ class CategoryController extends Controller
 		$em->remove($entity);
 		$em->flush();
 	
-		return $this->redirect($this->generateUrl('ad_manage_category'));
+		return $this->redirect($this->generateUrl('ad_index', array('update')));
 	}
 }

@@ -17,19 +17,29 @@ class FileController extends Controller
 {	
 	/**
 	 * @Route("/file/add/", name="ad_add_file")
+	 * @Route("/file/add/{catslug}", name="ad_add_file_sluged")
 	 * @Template()
 	 */
-	public function newAction(Request $request)
+	public function newAction(Request $request, $catslug = null)
 	{
 		$em = $this->getDoctrine()->getManager();
 		
 		$file = new File();
 		
-		$form = $this->createForm(new FileType(), $file); //, $adsParameter		
+		if ($catslug != null)
+		{
+			$category = $em->getRepository('adExtraBundle:Category')->findCatBySlug($catslug);
+			
+			$file->setCategoryId($category);
+		}
+		
+		
+		$form = $this->createForm(new FileType(), $file);
 		
 		$formView = $form->createView();
 		
 		$form->handleRequest($request);
+
 		
 		$validator = $this->get('validator');
 		$errorList = $validator->validate($file);
@@ -50,10 +60,10 @@ class FileController extends Controller
 			$em->persist($file);
 			$em->flush();
 			
-			return $this->redirect($this->generateUrl('ad_index'));
+			return $this->redirect($this->generateUrl('ad_index', array('new')));
 		}
 		
-		return $this->render('adExtraBundle:File:new.html.twig', array ('form' => $formView));
+		return $this->render('adExtraBundle:File:new.html.twig', array ('form' => $form->createView()));
 	}
 	
 	/**
@@ -69,7 +79,15 @@ class FileController extends Controller
 		{
 			if (!$file)
 			{
-				throw $this->createNotFoundException('Cette annonce n\'existe pas.');
+				throw $this->createNotFoundException('Ce fichier n\'existe pas en BDD.');
+			}
+			
+			if (!file_exists('uploads/files/'.$file->getName()))
+			{
+				$em->remove($file);
+				$em->flush();
+				
+				throw $this->createNotFoundException('Ce fichier n\'existe pas sur le disque.');
 			}
 			
 			unlink('uploads/files/'.$file->getName());

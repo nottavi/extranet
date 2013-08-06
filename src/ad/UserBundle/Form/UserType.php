@@ -11,22 +11,18 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('usernameCanonical')
-            ->add('email')
-            ->add('emailCanonical')
-            ->add('enabled')
-            ->add('salt')
-            ->add('password')
-            ->add('lastLogin')
-            ->add('locked')
-            ->add('expired')
-            ->add('expiresAt')
-            ->add('confirmationToken')
-            ->add('passwordRequestedAt')
-            ->add('roles')
-            ->add('credentialsExpired')
-            ->add('credentialsExpireAt')
+            ->add('username', null, array('label' => 'Login :'))
+            ->add('email', 'email', array('label' => 'Email :'))
+            ->add('plainPassword', 'repeated', array(
+												     'type' => 'password',
+												     'invalid_message' => 'Les deux mots de passes doivent être identiques',
+												     'options' => array('attr' => array('class' => 'password-field')),
+												     'required' => true,
+												     'first_options'  => array('label' => 'Mot de passe :'),
+												     'second_options' => array('label' => ' ')))
+            ->add('roles', 'choice', array('mapped' => false,
+            							   'choices' => array('ROLE_PARTENAIRE' => 'Utilisateur', 'ROLE_ADMIN' => 'Admin')))
+            ->add('Envoyer', 'submit');
         ;
     }
 

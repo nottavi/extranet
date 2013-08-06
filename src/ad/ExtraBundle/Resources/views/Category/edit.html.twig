@@ -1,9 +1,11 @@
 {% extends '::layout.html.twig' %}
 {% block body %}
+<div class="row centerbloc">
+	<div class="span8 offset2 centertext">
 	<h1>Editer une catégorie</h1>
-	<div class="well">
 		<form action="{{ path('ad_update_category', { 'id': id }) }}" method="post" {{ form_enctype(form) }}>
 			{{ form(form) }}
 		</form>
 	</div>
+</div>
 {% endblock %}

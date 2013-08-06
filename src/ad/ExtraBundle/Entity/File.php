@@ -46,7 +46,7 @@ class File
     
     /**
      * @var integer
-     * @ORM\ManyToOne(targetEntity="ad\ExtraBundle\Entity\Category", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="ad\ExtraBundle\Entity\Category", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $categoryId;

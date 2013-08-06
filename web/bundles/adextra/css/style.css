@@ -1,5 +1,164 @@
+h1{
+	text-align:center;
+	font-size:30px;
+	display:block;
+	margin:0 auto;
+}
+
+h2{
+	margin-top:0px;
+	font-size:20px;
+}
+
 header div.row{
-	height:50px;
+	height:20px;
+}
+
+div form select{
+	height:25px;
+}
+
+form div#ad_extrabundle_categorytype label, form div#ad_extrabundle_categorytype input{
+	display:block;
+	float:left;
+	margin-right:5px;
+	height:20px;
+}
+
+form{
+	display:block;
+	margin:0 auto;
+}
+
+form button{
+	display:block;
+	clear:both;
+	margin:0 auto;
+}
+
+form label, form input, form select{
+	display:block;
+	float:left;
+	margin-right:5px;
+	height:20px;
+	clear:right;
+}
+
+form div#ad_extrabundle_categorytype div{
+	display:block;
+}
+
+form label{
+	width:100px;
+	margin-top:5px;
+	clear:left;
+}
+
+.adduser{
+	width:350px;
+}
+
+#ad_userbundle_usertype{
+	width:350px;
+	margin:0 auto;
+}
+
+#ad_extrabundle_categorytype_Envoyer{
+	clear:both;
+	display:block;
+	margin:0 auto;
+}
+
+#ad_extrabundle_categorytype{
+	width:350px;
+	margin:0 auto;
+}
+
+#login{
+	display:block;
+	margin:0 auto;
+	width:400px;
+}
+
+.header #home{
+	float:left;
+}
+
+.header p{
+	float:right;
+}
+
+.header #conn{
+	float:right;
+}
+
+div.mfp-wrap div.mfp-container div.mfp-content{
+	background-color:white;
+	display:block;
+	mmargin:0 auto;
+	padding:20px;
+	width:300px;
+	position:absolute;
+	top:35%;
+	left:37%;
+}
+
+.mfp-content strong{
+	margin-top:20px;
+	font-size:18px;
+}
+
+.mfp-content li{
+	display:block;
+	float:left;
+	clear:both;
+	position:relative;
+	width:200px;
+	height:30px;
+	margin:5px;
+}
+
+.mfp-content a{
+	margin-left:10px;
+	position:absolute;
+	right:10px;
+}
+
+#login div{
+	height:40px;
+	width:400px;
+}
+
+#login input{
+	display:block;
+	float:right;
+	margin-right:8px;
+}
+
+#remember_me, #_submit{
+	clear:left;
+	margin-top:10px;
+}
+
+#login div.remember_me{
+	width:160px;
+	margin:0 auto;
+}
+
+.remember_me #remember_me{
+	float:left;
+}
+
+#login input#_submit{
+	margin:0 auto;
+	display:block;
+	float:none;
+}
+
+#login label{
+	display:block;
+	float:left;
+	margin-top:5px;
 }
 
 .ajax{
@@ -35,6 +194,10 @@ header div.row{
 	margin-top:4px;
 }
 
+.fichiers li{
+	clear:left;
+}
+
 .fichiers li, .fichiers a{
 	float:left;
 	display:block;
@@ -48,24 +211,46 @@ header div.row{
 	display:inline-block;
 }
 
-.files.loading {
+div.container span.alert{
+	display:block;
+	margin:0 auto;
+	text-align:center;
+	float:none;
+}
+
+.filesrefrsh{
+	min-height:150px;
+}
+
+.filesrefrsh.loading {
     background-image: url("/bundles/adextra/images/ajax-loader.gif");
     background-repeat:no-repeat;
-    width:25px;
-    height:25px;
+    background-position:center center;
 }
 
 .centertext{
 	text-align:center;
 }
 
-div.ajax div.dashaction{
-	margin-left:400px;
+.help-inline{
+	border-radius: 4px 4px 4px 4px;
+    margin-bottom: 20px;
+    padding: 8px 35px 8px 14px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    line-height: 20px;
+    background-color: #D9EDF7;
+    border-color: #BCE8F1;
+    color: #3A87AD;
+}
+
+.nospace{
+	margin-left:0px;
 }
 
 div.dashaction{
-	margin-left:435px;
 	width:185px;
+	margin-left:60px;
 }
 
 /* CSS pour le tree Category */
@@ -93,27 +278,61 @@ ul.treeLink li a:hover {
     border-width: 1px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.17), 0 -2px 0 rgba(0, 0, 0, 0.08) inset;
     display: inline-block;
-    margin: 0 0 50px;
+    margin: 0 0 20px 20px;
     min-width: 300px;
     padding: 10px 15px 15px;
 }
 .tree ul {
     list-style: none outside none;
+    clear:both;
 }
+
+.tree li {
+	
+}
+
 .tree li a {
     line-height: 25px;
+    float:left;
 }
+
+.tree li p {
+    line-height: 25px;
+    display:block;
+    float:left;
+}
+
 .tree > ul > li > a {
+    display: block;
+    font-weight: normal;
+    position: relative;
+    text-decoration: none;
+}
+
+.tree > ul > li > p {
     color: #3B4C56;
     display: block;
     font-weight: normal;
     position: relative;
     text-decoration: none;
 }
+
 .tree li.parent > a {
+    padding: 0 0 0 0px;
+}
+
+.tree li.parent > p {
     padding: 0 0 0 28px;
 }
+
 .tree li.parent > a:before {
+	display: block;
+    height: 21px;
+	vertical-align: middle;
+    width: 23px;
+}
+
+.tree li.parent > p:before {
     background-image: url("/img/plus_minus_icons.png");
     background-position: 0px center;
     content: "";
@@ -125,7 +344,7 @@ ul.treeLink li a:hover {
     vertical-align: middle;
     width: 23px;
 }
-.tree ul li.active > a:before {
+.tree ul li.active > p:before {
     background-position: 25px center;
 }
 .tree ul li ul {
@@ -146,3 +365,5 @@ ul.treeLink li a:hover {
     top: 12px;
     width: 15px;
 }
+
+

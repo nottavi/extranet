@@ -1,0 +1,14 @@
+<ul>
+	{% for user in users %}
+		<li>
+			<span>
+				<strong>{{ user.username }}</strong>
+				{% if action == 'edit' %}
+				<a class="btn btn-default" href="{{ path('ad_edit_user_id', { 'id': user.id }) }}">Editer</a>
+				{% else %}
+				<a class="btn btn-default" href="{{ path('ad_delete_user_id', { 'id': user.id }) }}">Supprimer</a>
+				{% endif %}
+			</span>
+		</li>
+	{% endfor %}
+	</ul>

@@ -10,6 +10,7 @@
   	{% block stylesheets %}
   	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('bundles/adextra/css/style.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/adextra/css/magnific-popup.css') }}" type="text/css" />
 	{% endblock %}
 	
 	
@@ -18,12 +19,20 @@
   <body>
   	<div class="container">
 		<header>
-			<div class="row span12">
-				<a style="float:left;" href="{{ path('ad_index') }}">Home</a>
-				<a style="float:right;" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+			<div class="row span12 nospace header">
+				<a id="home" href="{{ path('ad_index') }}">Home</a>
+				
+				
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+				    <p>Connecté en tant que {{ app.user.username }} - <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></p>
+				{% else %}
+				    <a id="conn" href="{{ path('fos_user_security_login') }}">Connexion</a>
+				{% endif %}
+				
 			</div>
+		<h1>Extranet Laborie</h1>
 		</header>
-	  	<div class="row span12 content well">
+	  	<div class="content well">
 		{% block body %}
 		
 		{% endblock %}

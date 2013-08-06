@@ -9,12 +9,24 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class FileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('file', 'file', array('label' => 'Votre fichier :'))
-            ->add('categoryId', null, array('label' => 'Choisir une catégorie :'))
-            ->add('Envoyer', 'submit');
-        ;
+    {    	
+        $builder->add('file', 'file', array('label' => 'Votre fichier :'));
+        
+        if ($options["data"]->getCategoryId() != null)
+        {
+        	$builder->add('categoryId', 'entity', array('class' => 'adExtraBundle:Category',
+    											'property' => 'name',
+            									'label' => 'Choisir une catégorie :',
+            									'preferred_choices' => array($options['data']->getCategoryId())));
+        }
+        else 
+        {
+        	$builder->add('categoryId', 'entity', array('class' => 'adExtraBundle:Category',
+									        			'property' => 'name',
+									        			'label' => 'Choisir une catégorie :'));
+        }
+            
+            $builder->add('Envoyer', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
